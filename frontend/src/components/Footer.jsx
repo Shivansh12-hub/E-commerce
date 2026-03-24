@@ -23,16 +23,17 @@ function Footer() {
 
               <div>
                   <p className='text-xl font-medium mb-5'>Get in Touch</p>
-                  <ul className='lex flex-col gap-1 text-gray-600'>
+                  <ul className='flex flex-col gap-1 text-gray-600'>
                       <li>+151-5468-466</li>
                       <li>contacytUs@getintouch.com</li>
                   </ul>
               </div>
+          </div>
               <div>
                   <hr />
                   <p className='py-5 text-sm text-center'>Copyright 2026@ forever.com - All Right Reserved</p>
               </div>
-      </div>
+      
     </div>
   )
 }

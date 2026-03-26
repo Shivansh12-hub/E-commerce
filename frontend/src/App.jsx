@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import Collection from './pages/Collection'
 import Home from './pages/home'
 import About from './pages/About'
-import Order from './pages/Order'
+import Orders from './pages/Orders'
 import Contact from './pages/Contact'
 import Product from './pages/Product'
 import Cart from './pages/Cart'
@@ -26,7 +26,7 @@ const App = () => {
         <Route path='/' element={<Home/>} />
         <Route path='/collection' element={<Collection/>} />
         <Route path='/about' element={<About/>} />
-        <Route path='/order' element={<Order />} />
+        <Route path='/orders' element={<Orders />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/product/:productId' element={<Product />} />
         <Route path='/cart' element={<Cart />} />

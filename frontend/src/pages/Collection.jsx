@@ -27,7 +27,7 @@ const Collection = () => {
     }
     else {
       setSubCategory(prev => [...prev, e.target.value]);
-  }
+    }
   }
 
  const applyFilter = () => {
@@ -40,10 +40,10 @@ const Collection = () => {
   }
 
   if (subCategory.length > 0) {
-    productCopy = productCopy.filter(item =>
-      subCategory.includes(item.subCategory?.toLowerCase())
-    );
-  }
+  productCopy = productCopy.filter(item =>
+    subCategory.includes(item.subCategory)
+  );
+}
 
   if (showSearch && search) {
     productCopy = productCopy.filter(item =>
@@ -76,7 +76,7 @@ const Collection = () => {
 
   useEffect(() => {
     setFilterProducts(products)
-  }, [])
+  }, [products])
   
   useEffect(() => {
     sortProducts();

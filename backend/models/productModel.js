@@ -20,15 +20,15 @@ const productSchema = new mongoose.Schema({
     subCategory: {
         type:String, required:true
     },
-    size: {
+    sizes: {
         type:Array, required:true
     },
-    bestSeller: {
+    bestseller: {
         type:Boolean
     },
     date:{type:Number, required:true}
 })
 
-const productModel = mongoose.model.product || mongoose.model('product', productSchema);
+const productModel = mongoose.models.product || mongoose.model('product', productSchema);
 
 export default productModel

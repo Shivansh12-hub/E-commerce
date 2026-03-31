@@ -3,26 +3,24 @@ import productModel from '../models/productModel.js';
 
 
 //  fuction to add product 
+
 const addProduct = async (req, res) => {
     try {
-        const { name, description, price, category, subCategory, sizes, bestseller } = req.body;
+        const { name, description, price, category, subCategory, bestseller, sizes } = req.body;
+
         const image1 = req.files?.image1?.[0];
         const image2 = req.files?.image2?.[0];
         const image3 = req.files?.image3?.[0];
         const image4 = req.files?.image4?.[0];
-        
-        
-        const images = [image1, image2, image3, image4].filter((item) => item !== undefined);
-        // console.log(name, description, price, category, subCategory, sizes, bestseller)
-        // console.log(images);
 
-        let imageUrl = await Promise.all(
+        const images = [image1, image2, image3, image4].filter((item) => item !== undefined);
+
+        const imagesUrl = await Promise.all(
             images.map(async (item) => {
-                let result = await cloudinary.uploader.upload(item.path, { resource_type: 'image' });
-                return result.secure_url
+                const result = await cloudinary.uploader.upload(item.path, { resource_type: 'image' });
+                return result.secure_url;
             })
-        )
-        
+        );
 
         const productData = {
             name,
@@ -30,27 +28,22 @@ const addProduct = async (req, res) => {
             category,
             price: Number(price),
             subCategory,
-            bestseller: bestseller === "true" ? true : false,
+            bestseller: bestseller === 'true',
             sizes: JSON.parse(sizes),
-            image: imageUrl, 
-            date:Date.now()
-        }
-
-        // console.log(productData);
+            image: imagesUrl,
+            date: Date.now()
+        };
 
         const product = new productModel(productData);
         await product.save();
 
-        res.json({
-            success: true,
-            message:"Successfully added the product",
-        })
-    }
-    catch (error) {
+        res.json({ success: true, message: 'Product Added' });
+    } catch (error) {
         console.log(error);
-        res.json({success:false, message:"Failed to save details"})
+        res.json({ success: false, message: 'Failed to add product' });
     }
 }
+
 
 // funtion to list product
 

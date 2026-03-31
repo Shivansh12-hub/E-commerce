@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProduct from '../components/RelatedProduct';
@@ -12,14 +12,12 @@ export default function Product() {
   const [size, setSize] = useState('');
 
   const fetchProductData = async () => {
-    products.map((item) => {
-      if (item._id === productId) {
-        setProductData(item);
-        setImage(item.image[0]);
-        console.log(item);
-        return null;
-      }
-    })
+    const product = products.find((item) => item._id === productId);
+    if (product) {
+      setProductData(product);
+      setImage(product.image?.[0] || '');
+      console.log(product);
+    }
   }
   useEffect(() => {
     fetchProductData();
@@ -61,7 +59,7 @@ export default function Product() {
             <p>Select Size</p>
             <div className='flex gap-2'>
               {
-                productData.sizes.map((item, index) => (
+                (productData.sizes || productData.size || []).map((item, index) => (
                   <button onClick={()=>setSize(item)} className={`border py-2 px-4 bg-gray-100 ${item===size ? 'border-orange-500':'' }`} key={index}>{item}</button>
                 ))
               }

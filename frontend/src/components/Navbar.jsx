@@ -6,11 +6,19 @@ import { ShopContext  } from '../context/ShopContext';
 export default function Navbar() {
   const [visible, setVisible] = useState(false);
 
-  const { setShowSearch,getCartCount } = useContext(ShopContext);
+  const { setShowSearch, getCartCount, navigate, token, setToken, setCartItems } = useContext(ShopContext);
+  
+  const logout = () => {
+        navigate('/login');
+    localStorage.removeItem("token");
+    setToken('');
+    setCartItems({});
+  }
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
 
-      <Link to='/'><img src={assets.logo} className="w-36 h-15" alt="logo" /></Link>
+      <Link to='/'>
+        <img src={assets.logo} className="w-36 h-15" alt="logo" /></Link>
 
       <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
         <NavLink to="/" className="flex flex-col items-center gap-1 ">
@@ -39,15 +47,17 @@ export default function Navbar() {
         <img onClick={()=>setShowSearch(true)} src={assets.search_icon} alt="search" className='w-5 cursor-pointer' />
 
         <div className='group relative'>
-        <Link to={'/login'}><img  src={assets.profile_icon} alt="profile" className='w-5 cursor-pointer' /></Link>
-
-          <div className='group-hover:block hidden absolute right-0 pt-4'>
+          
+          <img onClick={()=>token?null:navigate('/login')} src={assets.profile_icon} alt="profile" className='w-5 cursor-pointer' />
+{/* DropDown menu */}
+          { token && <div className='group-hover:block hidden absolute right-0 pt-4'>
             <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
               <p className='cursor-pointer hover:text-black'>My profile</p>
-              <p className='cursor-pointer hover:text-black'>Orders</p>
-              <p className='cursor-pointer hover:text-black'>Logout</p>
+              <p onClick={()=>navigate('/orders')} className='cursor-pointer hover:text-black'>Orders</p>
+              <p onClick={logout} className='cursor-pointer hover:text-black'>Logout</p>
             </div>
           </div>
+          }
         </div>
 
         <Link to='/cart' className='relative'>
